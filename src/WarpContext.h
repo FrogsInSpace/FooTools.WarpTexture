@@ -1,6 +1,7 @@
 #pragma once
 
 #include "max.h"
+#include "toneop.h"
 
 class WarpContext : public ShadeContext
 {
@@ -22,6 +23,7 @@ public:
 		atmosSkipLight	= sc->atmosSkipLight;
 		globContext		= sc->globContext;
 		out				= sc->out;
+		m_toneOp = sc->globContext != NULL ? sc->globContext->pToneOp : NULL;
 	}
 
 	void			ResetOutput				(int n)										{ m_sc->ResetOutput(n); }	
@@ -92,6 +94,11 @@ public:
 	Point3			VectorToNoScale			(const Point3& p, RefFrame ito)				{ return m_sc->VectorToNoScale(p, ito); }
 	Point3			VectorFromNoScale		(const Point3& p, RefFrame ifrom)			{ return m_sc->VectorFromNoScale(p, ifrom); }
 
+#if MAX_RELEASE_R26
+	Matrix3			MatrixTo				(RefFrame ito)								{ return  m_sc->MatrixTo( ito );	}
+	Matrix3			MatrixFrom				(RefFrame ifrom)							{ return  m_sc->MatrixFrom( ifrom ); }
+#endif
+
 	void			SetGBufferID			(int gbid)									{ m_sc->SetGBufferID(gbid); }
 
 	FILE*			DebugFile				()											{ return m_sc->DebugFile(); }
@@ -116,25 +123,23 @@ public:
 
 	Color			DiffuseIllum			()											{ return m_sc->DiffuseIllum(); }
 
-	bool			IsPhysicalSpace			() const									{ return m_sc->IsPhysicalSpace(); }
+	template<class T> void ScaledToRGB		(T& energy) const							{ m_toneOp != NULL ? m_toneOp->ScaledToRGB(energy) : energy; }
+	float			ScaledToRGB(float energy) const										{ return m_toneOp != NULL ? m_toneOp->ScaledToRGB(energy) : energy; }
 
-	template<class T> void ScaledToRGB		(T& energy) const							{ m_sc->ScaledToRGB(energy); }
-	float			ScaledToRGB				(float energy) const						{ return m_sc->ScaledToRGB(energy); }
+	//void			ScaledToRGB				()											{ m_toneOp->ScaledToRGB();  }
 
-	void			ScaledToRGB				()											{ m_sc->ScaledToRGB(); }
+	template<class T> void ScalePhysical	(T& energy) const							{ m_toneOp != NULL ? m_toneOp->ScalePhysical(energy) : energy; }
+	float			ScalePhysical			(float energy) const						{ return m_toneOp != NULL ? m_toneOp->ScalePhysical(energy) : energy; }
 
-	template<class T> void ScalePhysical	(T& energy) const							{ m_sc->ScaledPhysical(energy); }
-	float			ScalePhysical			(float energy) const						{ return m_sc->ScalePhysical(energy); }
-
-	template<class T> void ScaleRGB			(T& energy) const							{ m_sc->ScaleRGB(energy); }
-	float			ScaleRGB				(float energy) const						{ return m_sc->ScaleRGB(energy); }
+	template<class T> void ScaleRGB			(T& energy) const							{ m_toneOp != NULL ? m_toneOp->ScaleRGB(energy) : energy; }
+	float			ScaleRGB(float energy) const										{ return m_toneOp != NULL ? m_toneOp->ScaleRGB(energy) : energy; }
+	
 
 private:
-	ShadeContext* const		m_sc;
-	const Point3			m_warp;
+	ShadeContext* const	m_sc;
+	ToneOperator* m_toneOp;
+	const Point3 m_warp;
 };
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 inline Point3 WarpContext::PObjRelBox()
 {
@@ -162,3 +167,4 @@ inline Point3 WarpContext::UVW(int channel)
 {
 	return (m_sc->UVW(channel) + m_warp);
 }
+

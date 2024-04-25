@@ -31,6 +31,10 @@ class::CreateParamDlg:
 
 /////////////////////////////////////////////////////////////////////*/
 
+#ifndef _INC_SHELLAPI
+#include <shellapi.h>
+#endif
+
 #define FOOTOOL // Define to get a "fooTOOL", undefine to get a "BFDtool"
 
 #ifdef FOOTOOL
@@ -59,12 +63,12 @@ static INT_PTR CALLBACK aboutDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 			{
 				case IDC_ABOUT_WEB:
 				{
-					const int Err = reinterpret_cast<int>( ShellExecute(hWnd, NULL, "http://www.footools.com/aboutplugin/warptexture.html", NULL, NULL, NULL) );
-					if (Err<32)
+					const int Err = static_cast<int>(reinterpret_cast<uintptr_t>(ShellExecute(hWnd, NULL, _T("http://www.footools.com/aboutplugin/warptexture.html"), NULL, NULL, NULL)));
+					if (Err <32)
 					{
 						Interface* ip = GetCOREInterface();
 						HWND maxhWnd = (ip) ? ip->GetMAXHWnd() : NULL;
-						MessageBox(maxhWnd, "Internet access not available.", "Error", MB_OK|MB_ICONERROR|MB_APPLMODAL);
+						MessageBox(maxhWnd, _T("Internet access not available.("), _T("Error"), MB_OK | MB_ICONERROR | MB_APPLMODAL);
 					}
 					break;
 				}

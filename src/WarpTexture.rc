@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,50 +13,44 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_WARP_TEXTURE DIALOG DISCARDABLE  0, 0, 218, 53
-STYLE WS_CHILD | WS_VISIBLE
+IDD_WARP_TEXTURE DIALOG 0, 0, 218, 53
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
-    CONTROL         "",IDC_WARP_AMOUNT_EDIT,"CustEdit",WS_TABSTOP,115,38,30,
-                    10
+    CONTROL         "",IDC_WARP_AMOUNT_EDIT,"CustEdit",WS_TABSTOP,115,38,30,10
     CONTROL         "",IDC_WARP_AMOUNT_SPIN,"SpinnerControl",0x0,145,38,7,10
     RTEXT           "Warp Amount:",IDC_STATIC,65,39,46,8
-    CONTROL         "Warp",IDC_WARP_TEXTURE,"CustButton",WS_TABSTOP,42,21,
-                    150,12
+    CONTROL         "Warp",IDC_WARP_TEXTURE,"CustButton",WS_TABSTOP,42,21,150,12
     RTEXT           "Warp:",IDC_STATIC,14,24,24,8
-    CONTROL         "Target",IDC_TARGET_TEXTURE,"CustButton",WS_TABSTOP,42,5,
-                    150,12
+    CONTROL         "Target",IDC_TARGET_TEXTURE,"CustButton",WS_TABSTOP,42,5,150,12
     RTEXT           "Target:",IDC_STATIC,14,8,24,8
 END
 
-IDD_ABOUT_FOO DIALOGEX 0, 0, 218, 41
-STYLE WS_CHILD | WS_VISIBLE
-FONT 8, "MS Sans Serif"
+IDD_ABOUT_FOO DIALOGEX 0, 0, 218, 62
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "",IDC_STATIC,2,0,214,38
     RTEXT           "0000.00.00",IDC_ABOUT_VERSION,171,26,37,8
-    PUSHBUTTON      "www.fooTOOLS.com",IDC_ABOUT_WEB,114,10,96,13,BS_CENTER |
-                    NOT WS_TABSTOP,WS_EX_STATICEDGE
-    LTEXT           "Version ...............",IDC_STATIC,115,26,57,8
-    CONTROL         101,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE |
-                    SS_SUNKEN,14,13,57,17
+    PUSHBUTTON      "www.fooTOOLS.com",IDC_ABOUT_WEB,114,10,96,13,BS_CENTER | NOT WS_TABSTOP,WS_EX_STATICEDGE
+    LTEXT           "Version ...............",IDC_STATIC,115,26,54,8
+    CONTROL         IDD_WARP_TEXTURE,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,14,13,57,17
+    CTEXT           "3ds Max 2017+ Builds:\nJosef 'spacefrog' Wienerroither",IDC_STATIC,0,42,216,18
 END
 
-IDD_ABOUT_BFD DIALOG DISCARDABLE  0, 0, 218, 33
-STYLE WS_CHILD | WS_VISIBLE
+IDD_ABOUT_BFD DIALOG 0, 0, 218, 33
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "",IDC_STATIC,2,0,214,30
@@ -73,7 +67,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_WARP_TEXTURE, DIALOG
     BEGIN
@@ -81,6 +75,15 @@ BEGIN
         RIGHTMARGIN, 102
         TOPMARGIN, 7
         BOTTOMMARGIN, 46
+    END
+
+    IDD_ABOUT_FOO, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 41
+    END
+
+    IDD_ABOUT_BFD, DIALOG
+    BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -92,18 +95,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -117,14 +120,32 @@ END
 // Bitmap
 //
 
-IDB_FOOTOOLS            BITMAP  DISCARDABLE     "fooTOOLS_blue.bmp"
+IDB_FOOTOOLS            BITMAP                  "res/fooTOOLS_blue.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUT_FOO AFX_DIALOG_LAYOUT
+BEGIN
+    0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 100, 100
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE
+STRINGTABLE
 BEGIN
     IDS_LIBDESCRIPTION      "Warps one texture with another"
     IDS_CLASS_NAME          "WarpTexture"
@@ -133,14 +154,14 @@ BEGIN
     IDS_CATEGORY_FOO        "fooTOOLS"
     IDS_OUTPUT              "Output"
     IDS_PARAMS              "Parameters"
-    IDS_VERSION             "2007.02.20"
+    IDS_VERSION             "2025.02.01"
     IDS_WARP_AMOUNT         "Warp Amount"
     IDS_TARGET_TEXTURE      "Target Texture"
     IDS_WARP_AMOUNT_TEXTURE "Warp Amount Texture"
     IDS_WARP_AMOUNT_TEXTURE_ON "Warp Amount Texture On"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -43,6 +43,10 @@ public:
 	int 			IsPublic()				{ return 1; }
 	void*			Create(BOOL loading)	{ return new WarpTexture(); }
 	const TCHAR*	ClassName()				{ return GetString(IDS_CLASS_NAME); }
+#if MAX_VERSION_MAJOR >= 24
+	const TCHAR* NonLocalizedClassName() { return ClassName(); }
+#endif
+
 	SClass_ID		SuperClassID()			{ return TEXMAP_CLASS_ID; }
 	Class_ID		ClassID()				{ return kWarpTexture_ClassID; }
 	const TCHAR* 	Category()				{ return TEXMAP_CAT_3D; }
@@ -54,6 +58,10 @@ static WarpTextureClassDesc warpTextureClassDesc;
 ClassDesc2* GetWarpTextureClassDesc() { return &warpTextureClassDesc; }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#if MAX_VERSION_MAJOR >= 15
+#define end p_end
+#endif
 
 static ParamBlockDesc2 warpTexturePBlockDesc
 (
@@ -100,8 +108,11 @@ WarpTexture::WarpTexture() :
 }
 
 // Animatable /////////////////////////////////////////////////////////////////////////////////////
-
+#if MAX_RELEASE_R24
+void WarpTexture::GetClassName(TSTR& s, BOOL localized )
+#else
 void WarpTexture::GetClassName(TSTR& s)
+#endif
 {
 	s = GetString(IDS_WARP_TEXTURE);
 }
@@ -138,7 +149,11 @@ Animatable* WarpTexture::SubAnim(int subNum)
 	}
 }
 
+#if MAX_RELEASE_R24
+TSTR WarpTexture::SubAnimName(int subNum, BOOL isLocalized)
+#else
 TSTR WarpTexture::SubAnimName(int subNum)
+#endif
 {
 	switch (subNum)
 	{
@@ -228,7 +243,13 @@ void WarpTexture::SetReference(int i, RefTargetHandle refTarg)
 	}
 }
 
-RefResult WarpTexture::NotifyRefChanged(Interval changeInt, RefTargetHandle hTarget, PartID& partID, RefMessage message)
+#if MAX_VERSION_MAJOR < 17 //Max 2015
+RefResult WarpTexture::NotifyRefChanged(Interval changeInt, RefTargetHandle hTarget,
+	PartID& partID, RefMessage message)
+#else
+RefResult WarpTexture::NotifyRefChanged(const Interval& changeInt, RefTargetHandle hTarget,
+	PartID& partID, RefMessage message, BOOL propagate)
+#endif
 {
 	switch (message)
 	{
@@ -377,8 +398,11 @@ int WarpTexture::SubTexmapOn(int i)
 {
 	return 1;
 }
-
+#if MAX_RELEASE_R24
+TSTR WarpTexture::GetSubTexmapSlotName(int i, BOOL localized)
+#else
 TSTR WarpTexture::GetSubTexmapSlotName(int i)
+#endif
 {
 	TSTR slotName(_T(""));
 
